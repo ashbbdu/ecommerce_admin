@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(path = "/product-images")
 @RequiredArgsConstructor
@@ -17,6 +19,11 @@ public class ProductImageController {
     @PostMapping(path = "/add-product-image/{productId}")
     public ViewImageDto createProductImage (@RequestBody CreateImageDto createImageDto , @PathVariable Long productId) {
         return productImageService.createProductImageAndAssignToProduct(createImageDto ,productId);
+    }
+
+    @GetMapping(path = "/{productId}")
+    public List<ViewImageDto> getImagesByProduct (@PathVariable Long productId) {
+        return productImageService.getImagesByProduct(productId);
     }
 
 }

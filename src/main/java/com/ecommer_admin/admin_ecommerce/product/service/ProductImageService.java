@@ -10,9 +10,11 @@ import com.ecommer_admin.admin_ecommerce.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -37,5 +39,15 @@ public class ProductImageService {
 //        productRepository.save(product);
         ProductImageEntity savedProductImage =  productImageRepository.save(productImage);
         return modelMapper.map(savedProductImage , ViewImageDto.class);
+    }
+
+
+    public List<ViewImageDto> getImagesByProduct(Long productId) {
+        ProductEntity product = productRepository.findById(productId).orElseThrow(() ->
+                new ResourceNotFoundException("Invalid Product"));
+
+        List<ProductImageEntity> productImages = productImageRepository.findAllByProductId(productId);
+
+        return productImages.stream().map(res -> modelMapper.map(res , ViewImageDto.class)).toList();
     }
 }
