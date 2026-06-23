@@ -44,9 +44,9 @@ public class ProductImageService {
 
     public List<ViewImageDto> getImagesByProduct(Long productId) {
         ProductEntity product = productRepository.findById(productId).orElseThrow(() ->
-                new ResourceNotFoundException("Invalid Product"));
+                    new ResourceNotFoundException("Invalid Product"));
 
-        List<ProductImageEntity> productImages = productImageRepository.findAllByProductId(productId);
+            List<ProductImageEntity> productImages = productImageRepository.findAllByProductId(productId);
 
         return productImages.stream().map(res -> modelMapper.map(res , ViewImageDto.class)).toList();
     }

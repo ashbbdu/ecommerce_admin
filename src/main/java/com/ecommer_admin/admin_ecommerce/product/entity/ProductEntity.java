@@ -49,7 +49,7 @@ public class ProductEntity {
     @JoinColumn(name = "brand_id")
     private BrandEntity brand;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product" , cascade = CascadeType.ALL)
     private List<ProductImageEntity> productImages;
 
     @ManyToOne(fetch = FetchType.LAZY)

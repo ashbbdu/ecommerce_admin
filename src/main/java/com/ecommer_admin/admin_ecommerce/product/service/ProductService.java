@@ -59,4 +59,12 @@ public class ProductService {
         List<ProductEntity> products = productRepository.findAll();
         return products.stream().map(res -> modelMapper.map(res , ViewProduct.class)).toList();
     }
+
+    public ViewProduct deleteProduct (Long productId) {
+        ProductEntity product = productRepository.findById(productId).orElseThrow(() -> new
+                ResourceNotFoundException("Product with this id not found !"));
+
+        productRepository.delete(product);
+        return modelMapper.map(product , ViewProduct.class);
+    }
 }
