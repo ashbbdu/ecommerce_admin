@@ -5,6 +5,8 @@ import com.ecommer_admin.admin_ecommerce.category.entity.CategoryEntity;
 import com.ecommer_admin.admin_ecommerce.inventory.entity.InventoryEntity;
 import com.ecommer_admin.admin_ecommerce.order.entity.OrderItemEntity;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -14,6 +16,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "products")
+@Getter
+@Setter
 public class ProductEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
