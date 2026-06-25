@@ -5,6 +5,8 @@ import com.ecommer_admin.admin_ecommerce.common.exception.ResourceNotFoundExcept
 import com.ecommer_admin.admin_ecommerce.product.dto.CreateProduct;
 import com.ecommer_admin.admin_ecommerce.product.dto.ViewProduct;
 import com.ecommer_admin.admin_ecommerce.product.entity.ProductEntity;
+import com.ecommer_admin.admin_ecommerce.product.entity.ProductImageEntity;
+import com.ecommer_admin.admin_ecommerce.product.repository.ProductImageRepository;
 import com.ecommer_admin.admin_ecommerce.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -16,6 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository productRepository;
+    private final ProductImageRepository productImageRepository;
     private final ModelMapper modelMapper;
 
     public ViewProduct addProduct(CreateProduct createProduct) {
@@ -56,7 +59,8 @@ public class ProductService {
     }
 
     public List<ViewProduct> getAllProducts () {
-        List<ProductEntity> products = productRepository.findAll();
+//        List<ProductEntity> products = productRepository.findAll();
+        List<ProductEntity> products = productRepository.getAllProducts();
         return products.stream().map(res -> modelMapper.map(res , ViewProduct.class)).toList();
     }
 
@@ -65,6 +69,24 @@ public class ProductService {
                 ResourceNotFoundException("Product with this id not found !"));
 
         productRepository.delete(product);
+        return modelMapper.map(product , ViewProduct.class);
+    }
+
+    public ViewProduct deleteProductImage (Long productId , Long productImageId) {
+//        delete product image from parent , for this we have to add orphanRemoval = true
+        ProductEntity product = productRepository.findById(productId).orElseThrow(() -> new
+                ResourceNotFoundException("Product with this id not found !"));
+
+        ProductImageEntity productImage = productImageRepository.findById(productImageId).orElseThrow(() ->
+            new ResourceNotFoundException("Image not found")
+        );
+
+//        without orphanRemoval = true , the image will be disassociated with this product but will be present in ProductImage table
+        product.getProductImages().remove(productImage);
+//        productImage.setProduct(null);
+        productRepository.save(product);
+//        productImageRepository.save(productImage);
+
         return modelMapper.map(product , ViewProduct.class);
     }
 }

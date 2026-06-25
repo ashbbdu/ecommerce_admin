@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/products")
 @RequiredArgsConstructor
@@ -34,6 +36,16 @@ public class ProductController {
     @DeleteMapping("/delete/{productId}")
     public ViewProduct deleteProduct (@PathVariable Long productId) {
         return productService.deleteProduct(productId);
+    }
+
+    @GetMapping("/list")
+    public List<ViewProduct> getAllProducts () {
+        return productService.getAllProducts();
+    }
+
+    @DeleteMapping("/delete-image/{productId}/{productImageId}")
+    public ViewProduct deleteProductImage(@PathVariable Long productId , @PathVariable Long productImageId) {
+        return productService.deleteProductImage(productId , productImageId);
     }
 
 }

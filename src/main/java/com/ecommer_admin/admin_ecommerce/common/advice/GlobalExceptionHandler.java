@@ -3,6 +3,7 @@ package com.ecommer_admin.admin_ecommerce.common.advice;
 import com.ecommer_admin.admin_ecommerce.common.exception.ConflictException;
 import com.ecommer_admin.admin_ecommerce.common.exception.ResourceNotFoundException;
 import jakarta.validation.ConstraintViolationException;
+import org.apache.coyote.BadRequestException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -124,6 +125,17 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiResponse<?>> handleConstraintViolationException(
             ConstraintViolationException ex) {
         System.out.println("handled by ConstraintViolationException");
+        ApiError apiError = ApiError.builder()
+                .httpStatus(HttpStatus.BAD_REQUEST)
+                .message(ex.getMessage())
+                .build();
+
+        return handleGlobalResponse(apiError, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<ApiResponse<?>> handleBadRequestException(
+            BadRequestException ex) {
         ApiError apiError = ApiError.builder()
                 .httpStatus(HttpStatus.BAD_REQUEST)
                 .message(ex.getMessage())

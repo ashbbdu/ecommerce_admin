@@ -1,9 +1,11 @@
 package com.ecommer_admin.admin_ecommerce.product.dto;
 
+import com.ecommer_admin.admin_ecommerce.product.entity.ProductImageEntity;
 import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 public class ViewProduct {
@@ -20,6 +22,8 @@ public class ViewProduct {
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
+
+    private List<ViewImageDto> productImages;
 
 //    private Integer quantity;
 
