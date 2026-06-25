@@ -21,6 +21,7 @@ public class BrandEntity {
     private Long id;
 
     @Column(unique = true , length = 255)
+
     private String name;
 
     @Column

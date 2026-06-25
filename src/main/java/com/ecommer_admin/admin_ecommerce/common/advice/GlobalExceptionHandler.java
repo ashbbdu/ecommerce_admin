@@ -1,9 +1,9 @@
 package com.ecommer_admin.admin_ecommerce.common.advice;
 
+import com.ecommer_admin.admin_ecommerce.common.exception.BadRequestException;
 import com.ecommer_admin.admin_ecommerce.common.exception.ConflictException;
 import com.ecommer_admin.admin_ecommerce.common.exception.ResourceNotFoundException;
 import jakarta.validation.ConstraintViolationException;
-import org.apache.coyote.BadRequestException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,18 +35,18 @@ public class GlobalExceptionHandler {
 //        return new ResponseEntity<>(apiError , HttpStatus.BAD_REQUEST);
 //    }
 //
-//    @ExceptionHandler(DataIntegrityViolationException.class)
-//    public ResponseEntity<ApiError> handleDataIntegrityViolationException(
-//            DataIntegrityViolationException e) {
-//
-//        ApiError apiError = ApiError.builder()
-//                .httpStatus(HttpStatus.CONFLICT)
-//                .message("Database constraint violation")
-//                .subErrors(List.of(e.getMostSpecificCause().getMessage()))
-//                .build();
-//
-//        return new ResponseEntity<>(apiError , HttpStatus.CONFLICT);
-//    }
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ApiError> handleDataIntegrityViolationException(
+            DataIntegrityViolationException e) {
+
+        ApiError apiError = ApiError.builder()
+                .httpStatus(HttpStatus.CONFLICT)
+                .message("Database constraint violation")
+                .subErrors(List.of(e.getMostSpecificCause().getMessage()))
+                .build();
+
+        return new ResponseEntity<>(apiError , HttpStatus.CONFLICT);
+    }
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ApiResponse<?>> handleResourceNotFoundException (ResourceNotFoundException e) {

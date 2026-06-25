@@ -1,4 +1,5 @@
 package com.ecommer_admin.admin_ecommerce.inventory.dto;
+import com.ecommer_admin.admin_ecommerce.inventory.dto.type.InventoryStatus;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -17,6 +18,8 @@ public class ViewInventoryDto {
     private LocalDateTime lastUpdatedAt;
 
     private LocalDateTime createdAt;
+
+    private InventoryStatus status;
 
     private LocalDateTime updatedAt;
 

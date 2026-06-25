@@ -1,7 +1,9 @@
 package com.ecommer_admin.admin_ecommerce.inventory.entity;
 
+import com.ecommer_admin.admin_ecommerce.inventory.dto.type.InventoryStatus;
 import com.ecommer_admin.admin_ecommerce.product.entity.ProductEntity;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,22 +23,25 @@ public class InventoryEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
-    @Min(value = 0 , message = "Available stocks should be greater than 0")
+    @Column(nullable = false)
+    @DecimalMin(value = "0.0", inclusive = true, message = "Available stock cannot be negative.")
     private BigDecimal availableStock;
 
-    @Column
-    @Min(value =  0, message = "Minimum stocks should be greater than 0")
+    @Column(nullable = false)
+    @DecimalMin(value = "0.0", inclusive = true, message = "Minimum stock cannot be negative.")
     private BigDecimal minimumStock;
 
-
-    @Column
-    @Min(value = 0 , message = "Minimum stocks should be greater than 0")
+    @Column(nullable = false)
+    @DecimalMin(value = "0.0", inclusive = true, message = "Maximum stock cannot be negative.")
     private BigDecimal maximumStock;
 
-    @Column
-    @Min(value = 0 , message = "Reorder stocks Level should be greater than 0")
+    @Column(nullable = false)
+    @DecimalMin(value = "0.0", inclusive = true, message = "Reorder level cannot be negative.")
     private BigDecimal reorderLevel; // will trigger auto purchase if the stock is getting low
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    private InventoryStatus status;
 
     @UpdateTimestamp
     private LocalDateTime lastUpdatedAt;
