@@ -28,7 +28,11 @@ public class InventoryService {
     public ViewInventoryDto createInventory (CreateInventoryDto createInventoryDto , Long productId) {
         ProductEntity product = productRepository.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Product not found !"));
 
-        if (product.getInventory() != null) {
+//        if (product.getInventory() != null) {
+//            throw new ConflictException("Inventory already exist for this product !");
+//        }
+
+        if (inventoryRepository.existsByProduct(product)) {
             throw new ConflictException("Inventory already exist for this product !");
         }
 
