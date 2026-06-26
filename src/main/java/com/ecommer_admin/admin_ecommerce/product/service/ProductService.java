@@ -4,6 +4,7 @@ import com.ecommer_admin.admin_ecommerce.common.exception.ConflictException;
 import com.ecommer_admin.admin_ecommerce.common.exception.ResourceNotFoundException;
 import com.ecommer_admin.admin_ecommerce.product.dto.CreateProduct;
 import com.ecommer_admin.admin_ecommerce.product.dto.ViewProduct;
+import com.ecommer_admin.admin_ecommerce.product.dto.ViewProductDto;
 import com.ecommer_admin.admin_ecommerce.product.entity.ProductEntity;
 import com.ecommer_admin.admin_ecommerce.product.entity.ProductImageEntity;
 import com.ecommer_admin.admin_ecommerce.product.repository.ProductImageRepository;
@@ -89,4 +90,8 @@ public class ProductService {
 
         return modelMapper.map(product , ViewProduct.class);
     }
+
+//    public List<ViewProductDto> getAllProducts1() {
+//        return productRepository.getAllTest();
+//    }
 }

@@ -3,6 +3,7 @@ package com.ecommer_admin.admin_ecommerce.product.controller;
 import com.ecommer_admin.admin_ecommerce.common.exception.ResourceNotFoundException;
 import com.ecommer_admin.admin_ecommerce.product.dto.CreateProduct;
 import com.ecommer_admin.admin_ecommerce.product.dto.ViewProduct;
+import com.ecommer_admin.admin_ecommerce.product.dto.ViewProductDto;
 import com.ecommer_admin.admin_ecommerce.product.entity.ProductEntity;
 import com.ecommer_admin.admin_ecommerce.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -47,5 +48,10 @@ public class ProductController {
     public ViewProduct deleteProductImage(@PathVariable Long productId , @PathVariable Long productImageId) {
         return productService.deleteProductImage(productId , productImageId);
     }
+
+//    @GetMapping("/list1")
+//    public List<ViewProductDto> getAllProducts1 () {
+//        return productService.getAllProducts1();
+//    }
 
 }

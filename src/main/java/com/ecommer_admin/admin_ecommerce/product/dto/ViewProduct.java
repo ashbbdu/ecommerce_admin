@@ -1,5 +1,6 @@
 package com.ecommer_admin.admin_ecommerce.product.dto;
 
+import com.ecommer_admin.admin_ecommerce.category.entity.CategoryEntity;
 import com.ecommer_admin.admin_ecommerce.product.entity.ProductImageEntity;
 import lombok.Data;
 
@@ -23,7 +24,10 @@ public class ViewProduct {
 
     private LocalDateTime updatedAt;
 
+
     private List<ViewImageDto> productImages;
+
+    private ProductCategory category;
 
 //    private Integer quantity;
 

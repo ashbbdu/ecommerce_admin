@@ -11,9 +11,11 @@ import com.ecommer_admin.admin_ecommerce.inventory.entity.InventoryEntity;
 import com.ecommer_admin.admin_ecommerce.inventory.repository.InventoryRepository;
 import com.ecommer_admin.admin_ecommerce.product.entity.ProductEntity;
 import com.ecommer_admin.admin_ecommerce.product.repository.ProductRepository;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -24,10 +26,14 @@ public class InventoryService {
     private final InventoryRepository inventoryRepository;
     private final ModelMapper modelMapper;
     private final ProductRepository productRepository;
+    private EntityManager entityManager;
 
-    public ViewInventoryDto createInventory (CreateInventoryDto createInventoryDto , Long productId) {
+    @Transactional
+    public ViewInventoryDto createInventory (CreateInventoryDto createInventoryDto , Long productId)  {
         ProductEntity product = productRepository.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Product not found !"));
-
+//        System.out.println(product + " before detach");
+//        entityManager.detach(product);
+//        System.out.println(product + " after detach");
 //        if (product.getInventory() != null) {
 //            throw new ConflictException("Inventory already exist for this product !");
 //        }
@@ -60,9 +66,18 @@ public class InventoryService {
         }
 
         inventory.setProduct(product);
+
+//        try {
+//            Thread.sleep(60000);
+//        } catch (Exception e) {
+//            System.out.println(e);
+//        }
+
         InventoryEntity savedEntity = inventoryRepository.save(inventory);
 
         return modelMapper.map(savedEntity , ViewInventoryDto.class);
+
+//        return modelMapper.map(inventory , ViewInventoryDto.class);
     }
 
 

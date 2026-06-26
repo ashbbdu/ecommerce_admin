@@ -4,8 +4,11 @@ import com.ecommer_admin.admin_ecommerce.brand.entity.BrandEntity;
 import com.ecommer_admin.admin_ecommerce.category.entity.CategoryEntity;
 import com.ecommer_admin.admin_ecommerce.inventory.entity.InventoryEntity;
 import com.ecommer_admin.admin_ecommerce.order.entity.OrderItemEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -18,6 +21,8 @@ import java.util.List;
 @Table(name = "products")
 @Getter
 @Setter
+@AllArgsConstructor
+@RequiredArgsConstructor
 public class ProductEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,7 +54,7 @@ public class ProductEntity {
     @JoinColumn(name = "brand_id")
     private BrandEntity brand;
 
-    @OneToMany(mappedBy = "product" , cascade = CascadeType.ALL ,  orphanRemoval = true )
+    @OneToMany(mappedBy = "product" , cascade = CascadeType.ALL ,  orphanRemoval = true)
     private List<ProductImageEntity> productImages;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -57,6 +62,6 @@ public class ProductEntity {
     private OrderItemEntity orderItem;
 
     @OneToOne(mappedBy = "product" , fetch = FetchType.LAZY)
-    private InventoryEntity inventory;
+    private InventoryEntity inventory; // is not required on inverse side
 
 }
